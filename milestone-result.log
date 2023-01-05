@@ -1,0 +1,1307 @@
+***** Test-01: Encoding (DNS Query) ******
+query for facebook.com A
+Your query
+00000000  00 00 00 01 00 00 00 00  00 00 08 66 61 63 65 62  |...........faceb|
+00000010  6f 6f 6b 03 63 6f 6d 00  00 01 00 01              |ook.com.....|
+0000001c
+For Test 1, the query could be like
+00000000  00 00 00 01 00 00 00 00  00 00 08 66 61 63 65 62  |...........faceb|
+00000010  6f 6f 6b 03 63 6f 6d 00  00 01 00 01              |ook.com.....|
+0000001c
+or
+00000000  01 00 00 01 00 00 00 00  00 00 08 66 61 63 65 62  |...........faceb|
+00000010  6f 6f 6b 03 63 6f 6d 00  00 01 00 01              |ook.com.....|
+0000001c
+***** Test-02: Encoding (DNS Query) ******
+query for subdomain.example.com AAAA
+Your query
+00000000  00 00 00 01 00 00 00 00  00 00 09 73 75 62 64 6f  |...........subdo|
+00000010  6d 61 69 6e 07 65 78 61  6d 70 6c 65 03 63 6f 6d  |main.example.com|
+00000020  00 01 1c 00 01                                    |.....|
+00000025
+For Test 2, the query could be like
+00000000  00 00 00 01 00 00 00 00  00 00 09 73 75 62 64 6f  |...........subdo|
+00000010  6d 61 69 6e 07 65 78 61  6d 70 6c 65 03 63 6f 6d  |main.example.com|
+00000020  00 00 1c 00 01                                    |.....|
+00000025
+or
+00000000  01 00 00 01 00 00 00 00  00 00 09 73 75 62 64 6f  |...........subdo|
+00000010  6d 61 69 6e 07 65 78 61  6d 70 6c 65 03 63 6f 6d  |main.example.com|
+00000020  00 00 1c 00 01                                    |.....|
+00000025
+ Total Score = 3/5
+***** Test-03: Decoding (DNS Response) ******
+lookup www.cs.ubc.ca | java -jar DNSLookupService.jar 199.7.83.42 -p1
+Response obtained using your code
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+Query ID:       -14193 www.cs.ubc.ca A --> 199.7.83.42
+Reponse ID:     -14193 Athoritative = false
+Answers (0)
+Name Servers (4)
+       ca                             107264     NS   c.ca-servers.ca
+       ca                             107264     NS   j.ca-servers.
+       ca                             107264     NS   x.ca-servers.
+       ca                             107264     NS   any.ca-servers.
+Additional Information (8)
+       c.ca-servers.                  107264     A    185.159.196.2
+       j.                             107264     A    198.182.167.1
+       x.                             107264     A    199.253.250.68
+       any.                           107264     A    199.4.144.2
+       c.ca-servers.                  107264     AAAA 2620:10a:8053:0:0:0:0:2
+       j.                             107264     AAAA 2001:500:83:0:0:0:0:1
+       x.                             107264     AAAA 2620:10a:80ba:0:0:0:0:68
+       any.                           107264     AAAA 2001:500:a7:0:0:0:0:2
+www.cs.ubc.ca                  A     -1       0.0.0.0
+Goodbye!
+Response that we expected
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+
+
+Query ID     52453 www.cs.ubc.ca  A --> 199.7.83.42
+Response ID: 52453 Authoritative = false
+  Answers (0)
+  Nameservers (4)
+       ca                             172800     NS   c.ca-servers.ca
+       ca                             172800     NS   j.ca-servers.ca
+       ca                             172800     NS   x.ca-servers.ca
+       ca                             172800     NS   any.ca-servers.ca
+  Additional Information (8)
+       c.ca-servers.ca                172800     A    185.159.196.2
+       j.ca-servers.ca                172800     A    198.182.167.1
+       x.ca-servers.ca                172800     A    199.253.250.68
+       any.ca-servers.ca              172800     A    199.4.144.2
+       c.ca-servers.ca                172800     AAAA 2620:10a:8053:0:0:0:0:2
+       j.ca-servers.ca                172800     AAAA 2001:500:83:0:0:0:0:1
+       x.ca-servers.ca                172800     AAAA 2620:10a:80ba:0:0:0:0:68
+       any.ca-servers.ca              172800     AAAA 2001:500:a7:0:0:0:0:2
+www.cs.ubc.ca                  A     -1       0.0.0.0
+Goodbye!
+***** Test-04: Decoding (DNS Response) ******
+lookup www.stanford.edu | java -jar DNSLookupService.jar 199.7.83.42 -p1
+Response obtained using your code
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+Query ID:       -13483 www.stanford.edu A --> 199.7.83.42
+Exception in thread "main" java.lang.StackOverflowError
+	at java.base/java.lang.StringConcatHelper.prepend(StringConcatHelper.java:354)
+	at java.base/java.lang.StringConcatHelper.prepend(StringConcatHelper.java:373)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:201)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+	at ca.ubc.cs317.dnslookup.Packet.processRRPointer(Packet.java:194)
+Response that we expected
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+
+
+Query ID     39814 www.stanford.edu  A --> 199.7.83.42
+Response ID: 39814 Authoritative = false
+  Answers (0)
+  Nameservers (13)
+       edu                            172800     NS   a.edu-servers.net
+       edu                            172800     NS   b.edu-servers.net
+       edu                            172800     NS   c.edu-servers.net
+       edu                            172800     NS   d.edu-servers.net
+       edu                            172800     NS   e.edu-servers.net
+       edu                            172800     NS   f.edu-servers.net
+       edu                            172800     NS   g.edu-servers.net
+       edu                            172800     NS   h.edu-servers.net
+       edu                            172800     NS   i.edu-servers.net
+       edu                            172800     NS   j.edu-servers.net
+       edu                            172800     NS   k.edu-servers.net
+       edu                            172800     NS   l.edu-servers.net
+       edu                            172800     NS   m.edu-servers.net
+  Additional Information (14)
+       a.edu-servers.net              172800     A    192.5.6.30
+       b.edu-servers.net              172800     A    192.33.14.30
+       c.edu-servers.net              172800     A    192.26.92.30
+       d.edu-servers.net              172800     A    192.31.80.30
+       e.edu-servers.net              172800     A    192.12.94.30
+       f.edu-servers.net              172800     A    192.35.51.30
+       g.edu-servers.net              172800     A    192.42.93.30
+       h.edu-servers.net              172800     A    192.54.112.30
+       i.edu-servers.net              172800     A    192.43.172.30
+       j.edu-servers.net              172800     A    192.48.79.30
+       k.edu-servers.net              172800     A    192.52.178.30
+       l.edu-servers.net              172800     A    192.41.162.30
+       m.edu-servers.net              172800     A    192.55.83.30
+       a.edu-servers.net              172800     AAAA 2001:503:a83e:0:0:0:2:30
+www.stanford.edu               A     -1       0.0.0.0
+Goodbye!
+***** Test-05: Decoding (DNS Response) ******
+lookup site5.com | java -jar DNSLookupService.jar 199.7.83.42 -p1
+Response obtained using your code
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+Query ID:       -15772 site5.com A --> 199.7.83.42
+Reponse ID:     -15772 Athoritative = false
+Answers (0)
+Name Servers (13)
+       com                            107264     NS   a.gtld-servers.net
+       com                            107264     NS   b.gtld-servers.net
+       com                            107264     NS   c.gtld-servers.net
+       com                            107264     NS   d.gtld-servers.net
+       com                            107264     NS   e.gtld-servers.net
+       com                            107264     NS   f.gtld-servers.net
+       com                            107264     NS   g.gtld-servers.net
+       com                            107264     NS   h.gtld-servers.net
+       com                            107264     NS   i.gtld-servers.net
+       com                            107264     NS   j.gtld-servers.net
+       com                            107264     NS   k.gtld-servers.net
+       com                            107264     NS   l.gtld-servers.net
+       com                            107264     NS   m.gtld-servers.net
+Additional Information (14)
+       a.gtld-servers.net             107264     A    192.5.6.30
+       b. .ﾣ                          107264     A    192.33.14.30
+       c. .ﾣ                          107264     A    192.26.92.30
+       d. .ﾣ                          107264     A    192.31.80.30
+       e. .ﾣ                          107264     A    192.12.94.30
+       f. .ﾣ                          107264     A    192.35.51.30
+       g. .ﾣ                          107264     A    192.42.93.30
+       h. .ﾣ                          107264     A    192.54.112.30
+       i. .ﾣ                          107264     A    192.43.172.30
+       j. .ﾣ                          107264     A    192.48.79.30
+       k. .ﾣ                          107264     A    192.52.178.30
+       l. .ﾣ                          107264     A    192.41.162.30
+       m. .ﾣ                          107264     A    192.55.83.30
+       a.gtld-servers.net             107264     AAAA 2001:503:a83e:0:0:0:2:30
+site5.com                      A     -1       0.0.0.0
+Goodbye!
+Response that we expected
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+
+
+Query ID     7292 site5.com  A --> 199.7.83.42
+Response ID: 7292 Authoritative = false
+  Answers (0)
+  Nameservers (13)
+       com                            172800     NS   a.gtld-servers.net
+       com                            172800     NS   b.gtld-servers.net
+       com                            172800     NS   c.gtld-servers.net
+       com                            172800     NS   d.gtld-servers.net
+       com                            172800     NS   e.gtld-servers.net
+       com                            172800     NS   f.gtld-servers.net
+       com                            172800     NS   g.gtld-servers.net
+       com                            172800     NS   h.gtld-servers.net
+       com                            172800     NS   i.gtld-servers.net
+       com                            172800     NS   j.gtld-servers.net
+       com                            172800     NS   k.gtld-servers.net
+       com                            172800     NS   l.gtld-servers.net
+       com                            172800     NS   m.gtld-servers.net
+  Additional Information (14)
+       a.gtld-servers.net             172800     A    192.5.6.30
+       b.gtld-servers.net             172800     A    192.33.14.30
+       c.gtld-servers.net             172800     A    192.26.92.30
+       d.gtld-servers.net             172800     A    192.31.80.30
+       e.gtld-servers.net             172800     A    192.12.94.30
+       f.gtld-servers.net             172800     A    192.35.51.30
+       g.gtld-servers.net             172800     A    192.42.93.30
+       h.gtld-servers.net             172800     A    192.54.112.30
+       i.gtld-servers.net             172800     A    192.43.172.30
+       j.gtld-servers.net             172800     A    192.48.79.30
+       k.gtld-servers.net             172800     A    192.52.178.30
+       l.gtld-servers.net             172800     A    192.41.162.30
+       m.gtld-servers.net             172800     A    192.55.83.30
+       a.gtld-servers.net             172800     AAAA 2001:503:a83e:0:0:0:2:30
+site5.com                      A     -1       0.0.0.0
+Goodbye!
+***** Test-06: Decoding (DNS Response) ******
+lookup bbc.com | java -jar DNSLookupService.jar 199.7.83.42 -p1
+Response obtained using your code
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+Query ID:       -19115 www.bbc.com A --> 199.7.83.42
+Reponse ID:     -19115 Athoritative = false
+Answers (0)
+Name Servers (13)
+       com                            107264     NS   a.gtld-servers.net
+       com                            107264     NS   b.gtld-servers.net
+       com                            107264     NS   c.gtld-servers.net
+       com                            107264     NS   d.gtld-servers.net
+       com                            107264     NS   e.gtld-servers.net
+       com                            107264     NS   f.gtld-servers.net
+       com                            107264     NS   g.gtld-servers.net
+       com                            107264     NS   h.gtld-servers.net
+       com                            107264     NS   i.gtld-servers.net
+       com                            107264     NS   j.gtld-servers.net
+       com                            107264     NS   k.gtld-servers.net
+       com                            107264     NS   l.gtld-servers.net
+       com                            107264     NS   m.gtld-servers.net
+Additional Information (14)
+       a.gtld-servers.net             107264     A    192.5.6.30
+       b.                            107264     A    192.33.14.30
+       c.                            107264     A    192.26.92.30
+       d.                            107264     A    192.31.80.30
+       e.                            107264     A    192.12.94.30
+       f.                            107264     A    192.35.51.30
+       g.                            107264     A    192.42.93.30
+       h.                            107264     A    192.54.112.30
+       i.                            107264     A    192.43.172.30
+       j.                            107264     A    192.48.79.30
+       k.                            107264     A    192.52.178.30
+       l.                            107264     A    192.41.162.30
+       m.                            107264     A    192.55.83.30
+       a.gtld-servers.net             107264     AAAA 2001:503:a83e:0:0:0:2:30
+www.bbc.com                    A     -1       0.0.0.0
+Goodbye!
+Response that we expected
+Root DNS server is: 199.7.83.42
+Verbose tracing is now: ON
+
+
+Query ID     3892 www.bbc.com  A --> 199.7.83.42
+Response ID: 3892 Authoritative = false
+  Answers (0)
+  Nameservers (13)
+       com                            172800     NS   a.gtld-servers.net
+       com                            172800     NS   b.gtld-servers.net
+       com                            172800     NS   c.gtld-servers.net
+       com                            172800     NS   d.gtld-servers.net
+       com                            172800     NS   e.gtld-servers.net
+       com                            172800     NS   f.gtld-servers.net
+       com                            172800     NS   g.gtld-servers.net
+       com                            172800     NS   h.gtld-servers.net
+       com                            172800     NS   i.gtld-servers.net
+       com                            172800     NS   j.gtld-servers.net
+       com                            172800     NS   k.gtld-servers.net
+       com                            172800     NS   l.gtld-servers.net
+       com                            172800     NS   m.gtld-servers.net
+  Additional Information (14)
+       a.gtld-servers.net             172800     A    192.5.6.30
+       b.gtld-servers.net             172800     A    192.33.14.30
+       c.gtld-servers.net             172800     A    192.26.92.30
+       d.gtld-servers.net             172800     A    192.31.80.30
+       e.gtld-servers.net             172800     A    192.12.94.30
+       f.gtld-servers.net             172800     A    192.35.51.30
+       g.gtld-servers.net             172800     A    192.42.93.30
+       h.gtld-servers.net             172800     A    192.54.112.30
+       i.gtld-servers.net             172800     A    192.43.172.30
+       j.gtld-servers.net             172800     A    192.48.79.30
+       k.gtld-servers.net             172800     A    192.52.178.30
+       l.gtld-servers.net             172800     A    192.41.162.30
+       m.gtld-servers.net             172800     A    192.55.83.30
+       a.gtld-servers.net             172800     AAAA 2001:503:a83e:0:0:0:2:30
+www.bbc.com                    A     -1       0.0.0.0
+Goodbye!
+ Total Score = 0/10
